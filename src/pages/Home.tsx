@@ -2,31 +2,34 @@ import React from 'react';
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIcon from '../assets/images/google-icon.svg'
+import '../styles/auth.scss'
+import Button from '../components/Button';
+
 
 const Home = () => {
   return (
-    <div>
+    <div id="page-auth">
       <aside>
         <img src={illustrationImg} alt="Ilustração simbolizando perguntas e respostas" />
         <strong>Crie salas de Q&amp;A ao-vivo</strong>
         <p>Tire dúvidas do seu público em tempo real!</p>
       </aside>
       <main>
-        <div>
+        <div className="main-content">
           <img src={logoImg} alt="Logo da aplicação" />
-          <button>
+          <button className="create-room">
             <img src={googleIcon} alt="Logo do google" />
-            Cria sua sala com o google
+            <span>Cria sua sala com o google</span>
           </button>
-          <div>ou entre em uma sala</div>
+          <div className="separator">ou entre em uma sala</div>
           <form action="">
             <input
               type="text"
               placeholder="Código da sala"
             />
-            <button type="submit">
+            <Button type="submit">
               Entrar na sala
-            </button>
+            </Button>
           </form>
         </div>
       </main>
