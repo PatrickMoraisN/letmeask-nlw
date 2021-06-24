@@ -7,6 +7,7 @@ import '../styles/auth.scss'
 import Button from '../components/Button';
 import Toggle from '../components/Toggle';
 import dark from '../services/dark';
+import { auth, firebase } from '../services/firebase';
 
 
 
@@ -21,8 +22,15 @@ const Home = () => {
 
   const history = useHistory();
 
-  function navigateNewRoom() {
-    history.push("/rooms/new")
+  function handleCreateRoom() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    auth.signInWithPopup(provider)
+      .then(result => {
+        console.log(result)
+        history.push("/rooms/new")
+      })
+
   }
 
   return (
@@ -36,7 +44,7 @@ const Home = () => {
       <main>
         <div className="main-content">
           <img src={logoImg} alt="Logo da aplicação" className="logo"/>
-          <button className="create-room" onClick={ navigateNewRoom }>
+          <button className="create-room" onClick={ handleCreateRoom }>
             <img src={googleIcon} alt="Logo do google" />
             <span>Cria sua sala com o google</span>
           </button>
