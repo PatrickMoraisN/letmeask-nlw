@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
@@ -8,11 +8,13 @@ import Button from '../components/Button';
 import Toggle from '../components/Toggle';
 import dark from '../services/dark';
 import { useAuth } from '../hooks/useAuth';
+import { database } from '../services/firebase';
 
 
 
 const Home = () => {
   const [toggled, setToggled] = React.useState(false);
+  const [roomCode, setRoomCode] = React.useState('');
   const handleClick = () => {
       setToggled((s) => {
         dark(!s)
@@ -27,6 +29,23 @@ const Home = () => {
     if (!user) await signInWithGoogle();
 
     history.push("/rooms/new");
+  }
+
+  async function handleJoinRoom(event: FormEvent) {
+    event.preventDefault();
+
+    if (roomCode.trim() === '') {
+      return 
+    }
+
+    const roomRef = await database.ref(`/rooms/${roomCode}`).get();
+
+    if (!roomRef.exists()) {
+      alert('Sala nao existe')
+      return;
+    }
+
+    history.push(`/rooms/${roomCode}`)
   }
 
   return (
@@ -49,6 +68,8 @@ const Home = () => {
             <input
               type="text"
               placeholder="Código da sala"
+              onChange={event => setRoomCode(event.target.value)}
+              value={roomCode}
             />
             <Button type="submit">
               Entrar na sala

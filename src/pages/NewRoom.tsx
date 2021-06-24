@@ -6,11 +6,16 @@ import '../styles/auth.scss'
 import Button from '../components/Button';
 import Toggle from '../components/Toggle';
 import dark from '../services/dark';
+import { useHistory } from 'react-router-dom';
+import { FormEvent } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { database } from '../services/firebase';
 
 
 const Home = () => {
   const [toggled, setToggled] = React.useState(false);
+  const [newRoom, setNewRoom] = React.useState('');
+  const history = useHistory();
   const handleClick = () => {
       setToggled((s) => {
         dark(!s)
@@ -19,6 +24,23 @@ const Home = () => {
   };
 
   const { user } = useAuth();
+
+  async function handleCreateRoom(event: FormEvent) {
+    event.preventDefault();
+
+    if (newRoom.trim() === '') {
+      return;
+    }
+
+    const roomRef = database.ref('rooms');
+
+    const firebaseRoom = await roomRef.push({
+      title: newRoom,
+      authorId: user?.id,
+    })
+
+    history.push(`/rooms/${firebaseRoom.key}`)
+  }
 
   return (
     <div id="page-auth">
@@ -33,10 +55,12 @@ const Home = () => {
           <img src={logoImg} alt="Logo da aplicação" />
           <h2>Criar uma nova sala</h2>
           <h1>{user?.name}</h1>
-          <form action="">
+          <form onSubmit={ handleCreateRoom }>
             <input
               type="text"
               placeholder="Nome da sala"
+              value={newRoom}
+              onChange={(e) => setNewRoom(e.target.value)}
             />
             <Button type="submit">
               Criar sala
