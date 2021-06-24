@@ -7,8 +7,19 @@
 body {
   background-color: #f8f8f8;
   color: #29292e;
+  transition: 0.3s;
+}
+
+body.dark {
+  color: #f8f8f8;
+  background-color: #29292e;
+  transition: 0.3s;
 }
 
 body, input, button, textarea {
   font: 400 16px Roboto, sans-serif;
+}
+
+.logo.dark {
+  color: red;
 }

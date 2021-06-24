@@ -4,11 +4,22 @@ import logoImg from '../assets/images/logo.svg';
 import { Link } from 'react-router-dom';
 import '../styles/auth.scss'
 import Button from '../components/Button';
+import Toggle from '../components/Toggle';
+import dark from '../services/dark';
 
 
 const Home = () => {
+  const [toggled, setToggled] = React.useState(false);
+  const handleClick = () => {
+      setToggled((s) => {
+        dark(!s)
+        return !s;
+      });
+  };
+
   return (
     <div id="page-auth">
+      <Toggle toggled={ toggled } onClick={handleClick} />
       <aside>
         <img src={illustrationImg} alt="Ilustração simbolizando perguntas e respostas" />
         <strong>Crie salas de Q&amp;A ao-vivo</strong>
