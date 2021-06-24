@@ -1,4 +1,5 @@
 import React from 'react';
+import { useContext } from 'react';
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import { Link } from 'react-router-dom';
@@ -6,6 +7,7 @@ import '../styles/auth.scss'
 import Button from '../components/Button';
 import Toggle from '../components/Toggle';
 import dark from '../services/dark';
+import { AuthContext } from '../App';
 
 
 const Home = () => {
@@ -16,6 +18,8 @@ const Home = () => {
         return !s;
       });
   };
+
+  const { user } = useContext(AuthContext);
 
   return (
     <div id="page-auth">
@@ -29,6 +33,7 @@ const Home = () => {
         <div className="main-content">
           <img src={logoImg} alt="Logo da aplicação" />
           <h2>Criar uma nova sala</h2>
+          <h1>{user?.name}</h1>
           <form action="">
             <input
               type="text"
