@@ -1,5 +1,4 @@
 import React from 'react';
-import { useContext } from 'react';
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import { Link } from 'react-router-dom';
@@ -7,7 +6,7 @@ import '../styles/auth.scss'
 import Button from '../components/Button';
 import Toggle from '../components/Toggle';
 import dark from '../services/dark';
-import { AuthContext } from '../App';
+import { useAuth } from '../hooks/useAuth';
 
 
 const Home = () => {
@@ -19,7 +18,7 @@ const Home = () => {
       });
   };
 
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   return (
     <div id="page-auth">
