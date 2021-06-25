@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FormEvent } from "react";
 import imgLogo from "../assets/images/logo.svg";
 import Button from "../components/Button";
@@ -10,7 +10,6 @@ import { useAuth } from "../hooks/useAuth";
 import { database } from "../services/firebase";
 import Question from "../components/Question";
 import useRoom from "../hooks/useRoom";
-import { spawn } from "child_process";
 
 type RoomParams = {
   id: string;
@@ -40,7 +39,7 @@ const Room = () => {
         name: user.name,
         avatar: user.avatar,
       },
-      isHighLighted: false,
+      isHighlighted: false,
       isAnswered: false,
     };
 
@@ -104,6 +103,8 @@ const Room = () => {
                 content={question.content}
                 author={question.author}
                 key={question.id}
+                isAnswered={question.isAnswered}
+                isHighlighted={question.isHighLighted}
               >
                 <button
                   className={`like-button ${question.likeId ? 'liked' : ''}`}

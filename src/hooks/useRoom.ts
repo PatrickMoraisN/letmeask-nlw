@@ -23,7 +23,7 @@ type FirebaseQuestions = Record<string, {
   }
   content: string,
   isAnswered: boolean,
-  isHighLighted: boolean,
+  isHighlighted: boolean,
   likes: Record<string, {
     authorId: string,
   }>,
@@ -45,7 +45,7 @@ const useRoom = (roomId: string) => {
           id: key,
           content: value.content,
           author: value.author,
-          isHighLighted: value.isHighLighted,
+          isHighLighted: value.isHighlighted,
           isAnswered: value.isAnswered,
           likeCount: Object.values(value.likes ?? {}).length,
           likeId: Object.entries(value.likes ?? {}).find(([key,like])=> like.authorId === user?.id)?.[0]
