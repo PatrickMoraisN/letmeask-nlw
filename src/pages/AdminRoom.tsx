@@ -1,21 +1,38 @@
 import React from "react";
 import imgLogo from "../assets/images/logo.svg";
 import Button from "../components/Button";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import RoomCode from "../components/RoomCode";
+import deleteImg from '../assets/images/delete.svg';
 import '../styles/room.scss'
 import '../styles/question.scss'
 import Question from "../components/Question";
 import useRoom from "../hooks/useRoom";
+import { database } from "../services/firebase";
 
 type RoomParams = {
   id: string,
 }
 
 const AdminRoom = () => {
+  const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const {questions, title} = useRoom(roomId);
+
+  async function handleEndRoom() {
+    await database.ref(`rooms/${roomId}`).update({
+      endedAt: new Date(),
+    })
+
+    history.push('/')
+  }
+
+  async function handleDeleteQuestion(questionId: string) {
+    if(window.confirm('Tem certeza que deseja excluir?')) {
+      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
+    }
+  }
 
   return (
     <div id="page-room">
@@ -24,7 +41,7 @@ const AdminRoom = () => {
           <img src={imgLogo} alt="letmeask" />
           <div>
             <RoomCode code={roomId}/>
-            <Button isOutlined>Encerrar sala</Button>
+            <Button isOutlined onClick={handleEndRoom}>Encerrar sala</Button>
           </div>
         </div>
       </header>
@@ -42,7 +59,14 @@ const AdminRoom = () => {
                 content={question.content}
                 author={question.author}
                 key={question.id}
-              />
+              >
+                <button
+                  type="button"
+                  onClick={() => handleDeleteQuestion(question.id)}
+                >
+                  <img src={deleteImg} alt="delete"/>
+                </button>
+              </Question>
             )
           })}
         </div>
