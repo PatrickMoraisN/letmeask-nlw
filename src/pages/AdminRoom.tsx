@@ -1,13 +1,10 @@
-import React, { useEffect } from "react";
-import { FormEvent } from 'react';
+import React from "react";
 import imgLogo from "../assets/images/logo.svg";
 import Button from "../components/Button";
 import { useParams } from 'react-router-dom';
 import RoomCode from "../components/RoomCode";
 import '../styles/room.scss'
 import '../styles/question.scss'
-import { useAuth } from "../hooks/useAuth";
-import { database } from "../services/firebase";
 import Question from "../components/Question";
 import useRoom from "../hooks/useRoom";
 
@@ -16,37 +13,9 @@ type RoomParams = {
 }
 
 const AdminRoom = () => {
-  const { user } = useAuth();
-  const [newQuestion, setNewQuestion] = React.useState('');
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const {questions, title} = useRoom(roomId);
-
-  async function sendQuestion(event: FormEvent) {
-    event.preventDefault()
-
-    if (newQuestion.trim() === '') {
-      return;
-    }
-
-    if (!user) {
-      throw new Error('Voce nao ta logado, manin!')
-    }
-
-    const question = {
-      content: newQuestion,
-      author: {
-        name: user.name,
-        avatar: user.avatar,
-      },
-      isHighLighted: false,
-      isAnswered: false,
-    };
-
-    await database.ref(`rooms/${roomId}/questions`).push(question);
-
-    setNewQuestion('')
-  }
 
   return (
     <div id="page-room">
