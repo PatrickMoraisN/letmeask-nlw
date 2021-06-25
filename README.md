@@ -9,11 +9,16 @@
 <br />
 
 ---
-#  > in development ! < 
 # :camera_flash: Project Media
+<img src="src/assets/letmeask.gif" />
+
 ![Imagem do projeto](src/assets/images/let2.png)
 
 ![Imagem do projeto](src/assets/images/let1.png)
+
+![Imagem do projeto](src/assets/images/letAns.png)
+
+![Imagem do projeto](src/assets/images/letUs.png)
 
 <br />
 
