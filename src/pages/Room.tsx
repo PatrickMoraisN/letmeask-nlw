@@ -1,6 +1,7 @@
 import React from "react";
 import imgLogo from "../assets/images/logo.svg";
 import Button from "../components/Button";
+import '../styles/room.scss'
 
 const Room = () => {
   return (
